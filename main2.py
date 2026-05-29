@@ -33,4 +33,13 @@ def get_product(id: int):
 @app.post("/product")
 def post_product(product: Products):
     products.append(product)
-    return product
+    return "product is added"
+
+
+@app.delete("/product/{id}")
+def delete_product(id: int):
+    for pr in products:
+        if pr.id == id:
+            products.remove(pr)
+            return "product is deleted"
+    return "product not found"
