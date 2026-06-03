@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from DataBase import engine, session
 import db_model
-  
 
 
 app = FastAPI()
@@ -19,6 +18,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 db_model.base.metadata.create_all(bind=engine)
+
 
 class Products(BaseModel):
     name: str
