@@ -23,18 +23,18 @@ app = FastAPI()
 db_model.base.metadata.create_all(bind=engine)
 
 
-def init_db():
-    db = session()
-    for pr in products:
-        db.add(db_model.Products(**pr.model_dump()))
+# def init_db():
+#     db = session()
+#     for pr in products:
+#         db.add(db_model.Products(**pr.model_dump()))
 
-    db.commit()
-    count = db.query(db_model.Products).count()
+#     db.commit()
+#     count = db.query(db_model.Products).count()
 
-    print(f"Total products: {count}")
+#     print(f"Total products: {count}")
 
 
-init_db()
+# init_db()
 
 
 @app.get("/products")
@@ -46,10 +46,13 @@ def get_products():
 
 @app.get("/product/{id}")
 def get_product(id: int):
-    for pr in products:
-        if pr.id == id:
-            return pr
-    return "product not found"
+    # for pr in products:
+    #     if pr.id == id:
+    #         return pr
+    # return "product not found"
+    db = session()
+    product = db.query(db_model.Products).filter(db_model.Products.id == id).first()
+    return product
 
 
 @app.post("/product")
